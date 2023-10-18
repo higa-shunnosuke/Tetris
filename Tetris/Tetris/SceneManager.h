@@ -13,6 +13,7 @@ enum GAME_MODE
 {
 	E_TITLE,
 	E_GAMEMAIN,
+	E_RANKING,
 	E_END,
 	E_MODE_MAX
 };

@@ -110,7 +110,7 @@ void create_block(void);     //ブロックの生成処理
 void move_block(void);     //ブロックの移動処理
 void change_block(void);     //ストック交換処理
 void turn_block(int clockwise);     //ブロック回転処理
-void check_overlap(int x,int y);     //範囲外チェック処理
+int check_overlap(int x,int y);     //範囲外チェック処理
 void lock_block(int x,int y);     //着地したブロックを固定済みに変更する処理
 void check_line(void);     //ブロックの横一列確認処理
 
@@ -349,7 +349,7 @@ void create_block(void)
 * 引　数：なし
 * 戻り値：なし
 *****************************************************/
-void mobe_block(void)
+void move_block(void)
 {
 	//左入力時
 	if (GetButtonDown(XINPUT_BUTTON_DPAD_LEFT))
@@ -540,7 +540,7 @@ void lock_block(int x, int y)
 * 引　数：なし
 * 戻り値：なし
 *****************************************************/
-void check_line(int x, int y)
+void check_line(void)
 {
 	int i, j, k;     //ループカウンタ
 
@@ -561,7 +561,7 @@ void check_line(int x, int y)
 			DeleteLine++;
 
 			//１段下げる
-			for (k = i; k < 0; k--)
+			for (k = i; k > 0; k--)
 			{
 				for (j = 1; j < FIELD_WIDTH; j++)
 				{

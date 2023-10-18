@@ -36,12 +36,11 @@ void SceneManager_Initialize(GAME_MODE mode)
 	{
 		case E_TITLE:
 			read_error = TitleScene_Initialize();     //タイトル画面の初期化
-
 			break;
 		case E_GAMEMAIN:
 			read_error = GameMainScene_Initialize();     //ゲームメイン画面の初期化
 			break;
-		case E_RANKING;
+		case E_RANKING:
 			if (game_mode==E_GAMEMAIN)
 			{
 				Set_RankingMode(RANKING_INPUT_MODE);     //ランキング入力モードで起動
@@ -84,7 +83,7 @@ void SceneManager_Update(void)
 	case E_GAMEMAIN:
 		GameMainScene_Update();
 		break;
-		case E_RANKING;
+	case E_RANKING:
 			RankingScene_Update();
 			break;
 		case E_END:
@@ -110,7 +109,7 @@ void SceneManager_Draw(void)
 		case E_GAMEMAIN:
 			GameMainScene_Draw();
 			break;
-		case E_RANKING;
+		case E_RANKING:
 			RankingScene_Draw();
 			break;
 		case E_END:

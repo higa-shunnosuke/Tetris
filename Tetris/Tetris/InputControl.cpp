@@ -54,6 +54,9 @@ void InputControl_Update(void)
 	XINPUT_STATE input_controller;     //コントローラー入力情報
 
 		//コントローラーの入力情報を取得
+	GetJoypadXInputState(DX_INPUT_PAD1, &input_controller);
+
+	//入力状態の更新
 		for ( i = 0; i < XINPUT_BUTTON_MAX; i++)
 		{
 			if (input_controller.Buttons[i]==TRUE)

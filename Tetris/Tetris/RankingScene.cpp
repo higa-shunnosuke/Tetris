@@ -40,7 +40,7 @@ int name_num;
 *プロトタイプ宣言
 *****************************************************/
 void file_read(void);     //ファイル読込み
-void file_wrete(void);     //ファイル書き込み
+void file_write(void);     //ファイル書き込み
 void ranking_sort(void);     //ランキングソート処理
 void ranking_input_name(void);     //名前入力処理
 void ranking_input_name_draw(void);     //名前描画処理
@@ -153,7 +153,7 @@ void file_read(void)
 	{
 		OutputDebugString("ファイルを読み込めません");
 		OutputDebugString("ファイルを生成します");
-		file_wrete();
+		file_write();
 	}
 	else
 	{
