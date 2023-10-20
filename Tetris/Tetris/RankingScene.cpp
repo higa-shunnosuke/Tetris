@@ -250,21 +250,21 @@ void ranking_input_name(void)
 	}
 	if (GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT)==TRUE)
 	{
-		if (Cursor.x>0)
+		if (Cursor.x<12)
 		{
 			Cursor.x++;
 		}
 	}
 	if (GetButtonDown(XINPUT_BUTTON_DPAD_UP)==TRUE)
 	{
-		if (Cursor.x>0)
+		if (Cursor.y>0)
 		{
 			Cursor.y--;
 		}
 	}
 	if (GetButtonDown(XINPUT_BUTTON_DPAD_DOWN)==TRUE)
 	{
-		if (Cursor.x>0)
+		if (Cursor.y<4)
 		{
 			Cursor.y++;
 		}
@@ -317,7 +317,7 @@ void ranking_input_name_draw(void)
 	SetFontSize(40);
 	DrawFormatString(300, 150, GetColor(255, 255, 255), "–¼‘O‚ð“ü—Í‚µ‚Ä‚­‚¾‚³‚¢");
 
-	//ô‘ó—p•¶Žš‚ð•`‰æ
+	//‘I‘ð—p•¶Žš‚ð•`‰æ
 	for (i = 0; i < 26; i++)
 	{
 		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 330, GetColor(255, 255, 255), "%-3c", 'a' + i);

@@ -94,7 +94,7 @@ void TitleScene_Update(void)
 		PlaySoundMem(sounds[E_TITLE_SE_CURSOR], DX_PLAYTYPE_NORMAL, FALSE);
 		if (cursor_number<=0)
 		{
-			cursor_number = 0;
+			cursor_number = 2;
 		}
 		else
 		{
@@ -106,9 +106,9 @@ void TitleScene_Update(void)
 	if (GetButtonDown(XINPUT_BUTTON_DPAD_DOWN) == TRUE)
 	{
 		PlaySoundMem(sounds[E_TITLE_SE_CURSOR], DX_PLAYTYPE_NORMAL, FALSE);
-		if (cursor_number <= 2)
+		if (cursor_number >= 2)
 		{
-			cursor_number = 2;
+			cursor_number = 0;
 		}
 		else
 		{
@@ -127,10 +127,24 @@ void TitleScene_Draw(void)
 {
 	SetFontSize(50);
 	DrawString(100, 100, "テトリス", GetColor(255, 255, 255));
-	DrawString(300, 300, "スタート", GetColor(255, 255, 255));
-	DrawString(300, 350, "ランキング", GetColor(255, 255, 255));
-	DrawString(300, 400, "エンド", GetColor(255, 255, 255));
-	SetFontSize(20);
+	switch (cursor_number)
+	{
+	case 0:
+		DrawString(300, 300, "スタート", GetColor(0, 255, 0));
+		DrawString(300, 350, "ランキング", GetColor(255, 255, 255));
+		DrawString(300, 400, "エンド", GetColor(255, 255, 255));
+		break;
+	case 1:
+		DrawString(300, 300, "スタート", GetColor(255, 255, 255));
+		DrawString(300, 350, "ランキング", GetColor(0, 255, 0));
+		DrawString(300, 400, "エンド", GetColor(255, 255, 255));
+		break;
+	default:
+		DrawString(300, 300, "スタート", GetColor(255, 255, 255));
+		DrawString(300, 350, "ランキング", GetColor(255, 255, 255));
+		DrawString(300, 400, "エンド", GetColor(0, 255, 0));
+		break;
+	}
 
-	DrawCircle(275, 325 + (cursor_number * 50), 15, GetColor(255, 0, 0));
+	DrawTriangle(260, 310 + (cursor_number * 50), 260, 340 + (cursor_number * 50), 290, 325 + (cursor_number * 50), GetColor(0, 255, 0),TRUE);
 }
