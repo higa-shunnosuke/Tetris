@@ -58,14 +58,14 @@ int RankingScene_Initialize(void)
 
 	switch (DispMode)
 	{
-	case RANKING_INPUT_MODE:
+		case RANKING_INPUT_MODE:
 			Cursor.x = 0;
 			Cursor.y = 0;
 			name_num = 0;
 			break;
-	case RANKING_DISP_MODE:
-	default:
-		break;
+		case RANKING_DISP_MODE:
+		default:
+			break;
 	}
 	return ret;
 }
@@ -79,16 +79,16 @@ void RankingScene_Update(void)
 {
 	switch (DispMode)
 	{
-	case RANKING_INPUT_MODE:
-		ranking_input_name();
-		break;
-	case RANKING_DISP_MODE:
-	default:
-		if (GetButtonDown(XINPUT_BUTTON_B))
-		{
-			Change_Scene(E_TITLE);
-		}
-		break;
+		case RANKING_INPUT_MODE:
+			ranking_input_name();
+			break;
+		case RANKING_DISP_MODE:
+		default:
+			if (GetButtonDown(XINPUT_BUTTON_B))
+			{
+				Change_Scene(E_TITLE);
+			}
+			break;
 	}
 }
 
@@ -103,14 +103,16 @@ void RankingScene_Draw(void)
 
 	switch (DispMode)
 	{
+		case RANKING_DISP_MODE:
 		case RANKING_INPUT_MODE:
 			ranking_input_name_draw();
 			break;
-		case RANKING_DISP_MODE:
+		
 		default:
 			for (i = 0; i < RANKING_MAX; i++)
 			{
-				DrawFormatString(20, 10 + (i + 25), GetColor(255, 255, 255), "%2d,%10s,%10d", Ranking_Data[i].rank, Ranking_Data[i].name, Ranking_Data[i].score);
+				SetFontSize(25);
+				DrawFormatString(20, 10 + (i * 25), GetColor(255, 255, 255), "%2d,%10s,%10d", Ranking_Data[i].rank, Ranking_Data[i].name, Ranking_Data[i].score);
 			}
 			break;
 	}	
@@ -159,7 +161,7 @@ void file_read(void)
 	{
 		for ( i = 0; i < RANKING_MAX; i++)
 		{
-			fscanf_s(fp,"%2d,%[^,],%10d/n", &Ranking_Data[i].rank, Ranking_Data[i].name, RANKING_NAME_LEM, &Ranking_Data[i].score);
+			fscanf_s(fp,"%2d,%[^,],%10d\n", &Ranking_Data[i].rank, Ranking_Data[i].name, RANKING_NAME_LEM, &Ranking_Data[i].score);
 		}
 
 		fclose(fp);
@@ -186,7 +188,7 @@ void file_write(void)
 	{
 		for (i = 0; i < RANKING_MAX; i++)
 		{
-			fprintf(fp, "%2d,%[^,],%10d/n", Ranking_Data[i].rank, Ranking_Data[i].name, Ranking_Data[i].score);
+			fprintf(fp, "%2d,%s,%10d\n", Ranking_Data[i].rank, Ranking_Data[i].name, Ranking_Data[i].score);
 		}
 
 		fclose(fp);
@@ -247,12 +249,20 @@ void ranking_input_name(void)
 		{
 			Cursor.x--;
 		}
+		else
+		{
+			Cursor.x = 12;
+		}
 	}
 	if (GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT)==TRUE)
 	{
 		if (Cursor.x<12)
 		{
 			Cursor.x++;
+		}
+		else
+		{
+			Cursor.x = 0;
 		}
 	}
 	if (GetButtonDown(XINPUT_BUTTON_DPAD_UP)==TRUE)
@@ -261,12 +271,20 @@ void ranking_input_name(void)
 		{
 			Cursor.y--;
 		}
+		else
+		{
+			Cursor.y = 4;
+		}
 	}
 	if (GetButtonDown(XINPUT_BUTTON_DPAD_DOWN)==TRUE)
 	{
 		if (Cursor.y<4)
 		{
 			Cursor.y++;
+		}
+		else
+		{
+			Cursor.y = 0;
 		}
 	}
 
@@ -318,19 +336,28 @@ void ranking_input_name_draw(void)
 	DrawFormatString(300, 150, GetColor(255, 255, 255), "名前を入力してください");
 
 	//選択用文字を描画
+	for (i = 0; i < 26; i++) 
+	{
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 330, GetColor(255, 0, 0), "%-3c", 'a' + i);
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 430, GetColor(255, 0, 0), "%-3c", 'A' + i);
+	}
+	for (i = 0; i < 10; i++)
+	{
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 530, GetColor(255, 0,0), "%-3c", '0' + i);
+	}
+	/*for ( i = 0; i < 10; i++)
+	{
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 330, GetColor(255, 255, 255), "%-3c", '0' + i);
+	}
 	for (i = 0; i < 26; i++)
 	{
-		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 330, GetColor(255, 255, 255), "%-3c", 'a' + i);
-		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 430, GetColor(255, 255, 255), "%-3c", 'A' + i);
-	}
-	for ( i = 0; i < 10; i++)
-	{
-		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 530, GetColor(255, 255, 255), "%-3c", '0' + i);
-	}
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 430, GetColor(255, 255, 255), "%-3c", 'a' + i);
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 530, GetColor(255, 255, 255), "%-3c", 'A' + i);
+	}*/
 
 	DrawFormatString(300, 220, GetColor(255, 255, 255), ">%s",New_Score.name);
 
-	SetFontSize(20);
+	SetFontSize(25);
 
 	//選択している文字をフォーカス
 	DrawBox((Cursor.x * 50) + 290, (Cursor.y * 50) + 330, (Cursor.x * 50) + 330, (Cursor.y * 50) + 370, GetColor(255, 255, 255), FALSE);

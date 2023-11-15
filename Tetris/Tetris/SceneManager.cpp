@@ -48,7 +48,7 @@ void SceneManager_Initialize(GAME_MODE mode)
 			}
 			else
 			{
-				Set_RankingMode(RANKING_INPUT_MODE);     //ランキング入力モードで起動
+				Set_RankingMode(RANKING_DISP_MODE);     //ランキング入力モードで起動
 			}
 			read_error = RankingScene_Initialize();     //ランキング画面の初期化
 			break;
