@@ -103,11 +103,10 @@ void RankingScene_Draw(void)
 
 	switch (DispMode)
 	{
-		case RANKING_DISP_MODE:
 		case RANKING_INPUT_MODE:
 			ranking_input_name_draw();
 			break;
-		
+		case RANKING_DISP_MODE:
 		default:
 			for (i = 0; i < RANKING_MAX; i++)
 			{
@@ -338,23 +337,25 @@ void ranking_input_name_draw(void)
 	//‘I‘ð—p•¶Žš‚ð•`‰æ
 	for (i = 0; i < 26; i++) 
 	{
-		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 330, GetColor(255, 0, 0), "%-3c", 'a' + i);
-		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 430, GetColor(255, 0, 0), "%-3c", 'A' + i);
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 330, GetColor(255, 255, 255), "%-3c", 'a' + i);
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 430, GetColor(255, 255, 255), "%-3c", 'A' + i);
 	}
 	for (i = 0; i < 10; i++)
 	{
-		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 530, GetColor(255, 0,0), "%-3c", '0' + i);
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 530, GetColor(255, 255,255), "%-3c", '0' + i);
 	}
-	/*for ( i = 0; i < 10; i++)
+
+	/*for (i = 0; i < 10; i++)
 	{
 		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 330, GetColor(255, 255, 255), "%-3c", '0' + i);
 	}
-	for (i = 0; i < 26; i++)
+	for (i = 0; i < 26; i++) 
 	{
-		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 430, GetColor(255, 255, 255), "%-3c", 'a' + i);
-		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 530, GetColor(255, 255, 255), "%-3c", 'A' + i);
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 380, GetColor(255, 255, 255), "%-3c", 'a' + i);
+		DrawFormatString((i % 13 * 50) + 300, (i / 13 * 50) + 480, GetColor(255, 255, 255), "%-3c", 'A' + i);
 	}*/
-
+	
+	
 	DrawFormatString(300, 220, GetColor(255, 255, 255), ">%s",New_Score.name);
 
 	SetFontSize(25);

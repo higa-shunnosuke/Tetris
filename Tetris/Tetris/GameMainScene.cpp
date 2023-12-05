@@ -57,7 +57,7 @@ int GameMainScene_Initialize(void)
 void GameMainScene_Update(void)
 {
 	//BGMの生成
-	PlaySoundMem(BackGround_sound, DX_PLAYTYPE_LOOP, FALSE);
+	//PlaySoundMem(BackGround_sound, DX_PLAYTYPE_LOOP, FALSE);
 
 	//ブロック機能の更新
 	Block_Update();

@@ -94,6 +94,7 @@ BLOCK_STATE Field[FIELD_HEIGHT][FIELD_WIDTH];     //フィールド配列
 BLOCK_STATE Next[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];     //待機状態のブロック
 BLOCK_STATE Stock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];     //ストックのブロック
 BLOCK_STATE DropBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];     //落ちるブロック
+BLOCK_STATE initialBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];     //ストックするブロック
 int DropBlock_X;     //落ちるブロックのX座標
 int DropBlock_Y;     //落ちるブロックのY座標
 int WaitTime;     //待機時間
@@ -252,6 +253,7 @@ void Block_Draw(void)
 		{
 			//次のブロックを描画
 			DrawGraph(BLOCK_SIZE * j + BLOCK_NEXT_POS_X, BLOCK_SIZE * i + BLOCK_NEXT_POS_Y, BlockImage[Next[i][j]], TRUE);
+			//ストックされたブロックを描画
 			DrawGraph(BLOCK_SIZE * j + BLOCK_STOCK_POS_X, BLOCK_SIZE * i + BLOCK_STOCK_POS_Y, BlockImage[Stock[i][j]], TRUE);
 		}
 	}
@@ -336,6 +338,7 @@ void create_block(void)
 
 	//出現位置の設定
 	DropBlock_X = DROP_BLOCK_INIT_X;
+	DropBlock_Y = DROP_BLOCK_INIT_Y;
 
 	//生成できなかった時、ゲームオーバーに遷移する
 	if (check_overlap(DropBlock_X,DropBlock_Y)==FALSE)
@@ -406,9 +409,11 @@ void change_block(void)
 		{
 			for (j = 0; j < BLOCK_TROUT_SIZE; j++)
 			{
-				temp[i][j] = DropBlock[i][j];
+				temp[i][j] = initialBlock[i][j];
+				initialBlock[i][j] = Stock[i][j];
 				DropBlock[i][j] = Stock[i][j];
 				Stock[i][j] = temp[i][j];
+
 			}
 		}
 	}

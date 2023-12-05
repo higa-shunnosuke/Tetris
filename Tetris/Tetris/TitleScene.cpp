@@ -65,10 +65,10 @@ int TitleScene_Initialize(void)
 void TitleScene_Update(void)
 {
 	//BGMÇ™ó¨ÇÍÇƒÇ»Ç¢Ç∆Ç´Ç…çƒê∂
-	if (CheckSoundMem(sounds[E_TITLE_BGM])!=TRUE)
+	/*if (CheckSoundMem(sounds[E_TITLE_BGM])!=TRUE)
 	{
 		PlaySoundMem(sounds[E_TITLE_BGM], DX_PLAYTYPE_BACK, FALSE);
-	}
+	}*/
 
 	if (GetButtonDown(XINPUT_BUTTON_B)==TRUE)
 	{
