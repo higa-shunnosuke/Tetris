@@ -70,7 +70,7 @@ void TitleScene_Update(void)
 		PlaySoundMem(sounds[E_TITLE_BGM], DX_PLAYTYPE_BACK, FALSE);
 	}*/
 
-	if (GetButtonDown(XINPUT_BUTTON_B)==TRUE)
+	if (GetButtonDown(XINPUT_BUTTON_B)==TRUE||CheckHitKey(KEY_INPUT_SPACE)==TRUE)
 	{
 		StopSoundMem(sounds[E_TITLE_BGM]);
 		PlaySoundMem(sounds[E_TITLE_SE_SELECT], DX_PLAYTYPE_BACK, FALSE);

@@ -5,36 +5,36 @@
 /****************************************************
 *マクロ定義
 *****************************************************/
-#define FIELD_HEIGHT (21)     //フィールドのマスの高さ
-#define FIELD_WIDTH (12)     //フィールドのマスの幅
-#define BLOCK_TROUT_SIZE (4)     //ブロックのマスサイズ
-#define BLOCK_SIZE (36)     //１ブロック当たりのサイズ
-#define BLOCK_TYPE_MAX (7)     //落ちてくるブロックの種類
-#define BLOCK_NEXT_POS_X (700)     //次のブロックの座標（X座標）
-#define BLOCK_NEXT_POS_Y (500)     //次のブロックのぁ表（Y座標）
-#define BLOCK_STOCK_POS_X (500)     //ストックされたブロックの座標（X座標）
-#define BLOCK_STOCK_POS_Y (350)     //ストックされたブロックの座標（Y座標）
-#define DROP_BLOCK_INIT_X (4)     //落ちてくるブロックの初期X座標
-#define DROP_BLOCK_INIT_Y (-1)     //落ちてくるブロックの初期Y座標
-#define DROP_SPEED (60)     //落下時間
-#define TURN_CROCKWICE (0)     //時計回りに回転させる
-#define TURN_ANTICROCKWICE (1)     //反時計回りに回転させる
+#define FIELD_HEIGHT (21)			//フィールドのマスの高さ
+#define FIELD_WIDTH (12)			//フィールドのマスの幅
+#define BLOCK_TROUT_SIZE (4)		//ブロックのマスサイズ
+#define BLOCK_SIZE (36)				//１ブロック当たりのサイズ
+#define BLOCK_TYPE_MAX (7)			//落ちてくるブロックの種類
+#define BLOCK_NEXT_POS_X (700)		//次のブロックの座標（X座標）
+#define BLOCK_NEXT_POS_Y (500)		//次のブロックのぁ表（Y座標）
+#define BLOCK_STOCK_POS_X (500)		//ストックされたブロックの座標（X座標）
+#define BLOCK_STOCK_POS_Y (350)		//ストックされたブロックの座標（Y座標）
+#define DROP_BLOCK_INIT_X (4)		//落ちてくるブロックの初期X座標
+#define DROP_BLOCK_INIT_Y (-1)		//落ちてくるブロックの初期Y座標
+#define DROP_SPEED (60)				//落下時間
+#define TURN_CROCKWICE (0)			//時計回りに回転させる
+#define TURN_ANTICROCKWICE (1)		//反時計回りに回転させる
 
 /****************************************************
 *型定義
 *****************************************************/
 enum BLOCK_STATE
 {
-	E_BLOCK_EMPTY,     //空ブロック
-	E_BLOCK_LEGHT_BLUE,     //水色
-	E_BLOCK_YELLOW_GREEN,     //黄緑
-	E_BLOCK_IELLOW,     //黄色
-	E_BLOCK_OLANBE,     //オレンジ
-	E_BLOCK_BLUE,     //青
-	E_BLOCK_PINK,     //ピンク
-	E_BLOCK_RED,     //赤
-	E_BLOCK_GLAY,     //灰色
-	E_BLOCK_WALL,     //壁
+	E_BLOCK_EMPTY,			//空ブロック
+	E_BLOCK_LEGHT_BLUE,		//水色
+	E_BLOCK_YELLOW_GREEN,	//黄緑
+	E_BLOCK_IELLOW,			//黄色
+	E_BLOCK_OLANBE,			//オレンジ
+	E_BLOCK_BLUE,			//青
+	E_BLOCK_PINK,			//ピンク
+	E_BLOCK_RED,			//赤
+	E_BLOCK_GLAY,			//灰色
+	E_BLOCK_WALL,			//壁
 	E_BLOCK_IMAGE_MAX,     
 };
 /****************************************************
@@ -89,31 +89,31 @@ const int C_BLOCK_TABLE[BLOCK_TYPE_MAX][BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = {
 /****************************************************
 *変数宣言
 *****************************************************/
-int BlockImage[E_BLOCK_IMAGE_MAX];     //ブロック画像
-BLOCK_STATE Field[FIELD_HEIGHT][FIELD_WIDTH];     //フィールド配列
-BLOCK_STATE Next[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];     //待機状態のブロック
-BLOCK_STATE Stock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];     //ストックのブロック
-BLOCK_STATE DropBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];     //落ちるブロック
-BLOCK_STATE initialBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];     //ストックするブロック
-int DropBlock_X;     //落ちるブロックのX座標
-int DropBlock_Y;     //落ちるブロックのY座標
-int WaitTime;     //待機時間
-int Stock_Flg;     //ストックフラグ
-int Generate_Flg;     //生成フラグ
-int DeleteLine;     //消したラインに数
-int SoundEffect[3];     //SE
+int BlockImage[E_BLOCK_IMAGE_MAX];								//ブロック画像
+BLOCK_STATE Field[FIELD_HEIGHT][FIELD_WIDTH];					//フィールド配列
+BLOCK_STATE Next[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];			//待機状態のブロック
+BLOCK_STATE Stock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];			//ストックのブロック
+BLOCK_STATE DropBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];		//落ちるブロック
+BLOCK_STATE initialBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];	//ストックするブロック
+int DropBlock_X;	//落ちるブロックのX座標
+int DropBlock_Y;	//落ちるブロックのY座標
+int WaitTime;		//待機時間
+int Stock_Flg;		//ストックフラグ
+int Generate_Flg;	//生成フラグ
+int DeleteLine;		//消したラインに数
+int SoundEffect[3];	//SE
 
 /****************************************************
 *プロトタイプ宣言宣言
 *****************************************************/
-void create_field(void);     //フィールドの生成処理
-void create_block(void);     //ブロックの生成処理
-void move_block(void);     //ブロックの移動処理
-void change_block(void);     //ストック交換処理
-void turn_block(int clockwise);     //ブロック回転処理
-int check_overlap(int x,int y);     //範囲外チェック処理
-void lock_block(int x,int y);     //着地したブロックを固定済みに変更する処理
-void check_line(void);     //ブロックの横一列確認処理
+void create_field(void);		//フィールドの生成処理
+void create_block(void);		//ブロックの生成処理
+void move_block(void);			//ブロックの移動処理
+void change_block(void);		//ストック交換処理
+void turn_block(int clockwise);	//ブロック回転処理
+int check_overlap(int x,int y);	//範囲外チェック処理
+void lock_block(int x,int y);	//着地したブロックを固定済みに変更する処理
+void check_line(void);			//ブロックの横一列確認処理
 
 /****************************************************
 *ブロック機能：初期化処理
@@ -182,7 +182,7 @@ void Block_Update(void)
 	move_block();
 
 	//ブロックのストック
-	if ((GetButtonDown(XINPUT_BUTTON_LEFT_SHOULDER)==TRUE)||(GetButtonDown(XINPUT_BUTTON_RIGHT_SHOULDER)==TRUE))
+	if ((GetButtonDown(XINPUT_BUTTON_LEFT_SHOULDER)==TRUE)||(GetButtonDown(XINPUT_BUTTON_RIGHT_SHOULDER)==TRUE) || CheckHitKey(KEY_INPUT_SPACE) == TRUE)
 	{
 		//生成可能であれば
 		if (Generate_Flg==TRUE)
@@ -333,6 +333,7 @@ void create_block(void)
 		{
 			DropBlock[i][j] = Next[i][j];
 			Next[i][j] = (BLOCK_STATE)C_BLOCK_TABLE[block_type][i][j];
+			initialBlock[i][j] = DropBlock[i][j];
 		}
 	}
 
@@ -355,7 +356,7 @@ void create_block(void)
 void move_block(void)
 {
 	//左入力時
-	if (GetButtonDown(XINPUT_BUTTON_DPAD_LEFT))
+	if (GetButtonDown(XINPUT_BUTTON_DPAD_LEFT)|| CheckHitKey(KEY_INPUT_LEFT) == TRUE)
 	{
 		if (check_overlap(DropBlock_X-1,DropBlock_Y)==TRUE)
 		{
@@ -364,7 +365,7 @@ void move_block(void)
 	}
 
 	//右入力時
-	if (GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT))
+	if (GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT) || CheckHitKey(KEY_INPUT_RIGHT) == TRUE)
 	{
 		if (check_overlap(DropBlock_X + 1, DropBlock_Y) == TRUE)
 		{
@@ -382,7 +383,7 @@ void move_block(void)
 	}
 	
 	//下入力時（ソフトドロップ処理）
-	if (GetButtonDown(XINPUT_BUTTON_DPAD_DOWN))
+	if (GetButtonDown(XINPUT_BUTTON_DPAD_DOWN) || CheckHitKey(KEY_INPUT_DOWN) == TRUE)
 	{
 		while (check_overlap(DropBlock_X, DropBlock_Y+1) == TRUE)
 		{
@@ -410,10 +411,9 @@ void change_block(void)
 			for (j = 0; j < BLOCK_TROUT_SIZE; j++)
 			{
 				temp[i][j] = initialBlock[i][j];
-				initialBlock[i][j] = Stock[i][j];
 				DropBlock[i][j] = Stock[i][j];
+				initialBlock[i][j] = Stock[i][j];
 				Stock[i][j] = temp[i][j];
-
 			}
 		}
 	}
@@ -424,7 +424,7 @@ void change_block(void)
 		{
 			for (j = 0; j < BLOCK_TROUT_SIZE; j++)
 			{
-				Stock[i][j] = DropBlock[i][j];
+				Stock[i][j] = initialBlock[i][j];
 			}
 		}
 		//新しいブロックの生成と次のブロックの生成
