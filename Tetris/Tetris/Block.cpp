@@ -94,11 +94,12 @@ BLOCK_STATE Field[FIELD_HEIGHT][FIELD_WIDTH];					//フィールド配列
 BLOCK_STATE Next[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];			//待機状態のブロック
 BLOCK_STATE Stock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];			//ストックのブロック
 BLOCK_STATE DropBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];		//落ちるブロック
-BLOCK_STATE initialBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];	//ストックするブロック
+BLOCK_STATE InitialBlock[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE];	//落ちるブロックの初期配列
 int DropBlock_X;	//落ちるブロックのX座標
 int DropBlock_Y;	//落ちるブロックのY座標
 int WaitTime;		//待機時間
 int Stock_Flg;		//ストックフラグ
+int Hold_Flg;		//ホールドフラグ
 int Generate_Flg;	//生成フラグ
 int DeleteLine;		//消したラインに数
 int SoundEffect[3];	//SE
@@ -150,6 +151,9 @@ int Block_Initialize(void)
 
 	//ストックフラグの初期化
 	Stock_Flg = FALSE;
+	
+	//ホールドフラグの初期化
+	Hold_Flg = FALSE;
 
 	//生成フラグの初期化
 	Generate_Flg = TRUE;
@@ -185,7 +189,7 @@ void Block_Update(void)
 	if ((GetButtonDown(XINPUT_BUTTON_LEFT_SHOULDER)==TRUE)||(GetButtonDown(XINPUT_BUTTON_RIGHT_SHOULDER)==TRUE) || CheckHitKey(KEY_INPUT_SPACE) == TRUE)
 	{
 		//生成可能であれば
-		if (Generate_Flg==TRUE)
+		if (Generate_Flg==TRUE&&Hold_Flg==FALSE)
 		{
 			change_block();     //ストック交換処理
 			//ブロックの回転を正位置にする
@@ -333,7 +337,7 @@ void create_block(void)
 		{
 			DropBlock[i][j] = Next[i][j];
 			Next[i][j] = (BLOCK_STATE)C_BLOCK_TABLE[block_type][i][j];
-			initialBlock[i][j] = DropBlock[i][j];
+			InitialBlock[i][j] = DropBlock[i][j];
 		}
 	}
 
@@ -402,34 +406,44 @@ void change_block(void)
 	BLOCK_STATE temp[BLOCK_TROUT_SIZE][BLOCK_TROUT_SIZE] = { E_BLOCK_EMPTY };     //退避領域
 
 	int i, j;     //ループカウンタ
-	
-	//ストック先が空かどうか確認
-	if (Stock_Flg==TRUE)
-	{
-		for ( i = 0; i < BLOCK_TROUT_SIZE; i++)
+
+		//ストック先が空かどうか確認
+		if (Stock_Flg == TRUE)
 		{
-			for (j = 0; j < BLOCK_TROUT_SIZE; j++)
+			//ホールドを１回だけにする
+			if (Hold_Flg == FALSE)
 			{
-				temp[i][j] = initialBlock[i][j];
-				DropBlock[i][j] = Stock[i][j];
-				initialBlock[i][j] = Stock[i][j];
-				Stock[i][j] = temp[i][j];
+				for (i = 0; i < BLOCK_TROUT_SIZE; i++)
+				{
+					for (j = 0; j < BLOCK_TROUT_SIZE; j++)
+					{
+						temp[i][j] = InitialBlock[i][j];
+						DropBlock[i][j] = Stock[i][j];
+						InitialBlock[i][j] = Stock[i][j];
+						Stock[i][j] = temp[i][j];
+					}
+				}
+				Hold_Flg = TRUE;
 			}
 		}
-	}
-	else
-	{
-		Stock_Flg = TRUE;
-		for ( i = 0; i < BLOCK_TROUT_SIZE; i++)
+		else
 		{
-			for (j = 0; j < BLOCK_TROUT_SIZE; j++)
+			Stock_Flg = TRUE;
+			for (i = 0; i < BLOCK_TROUT_SIZE; i++)
 			{
-				Stock[i][j] = initialBlock[i][j];
+				for (j = 0; j < BLOCK_TROUT_SIZE; j++)
+				{
+					Stock[i][j] = InitialBlock[i][j];
+				}
 			}
+			//新しいブロックの生成と次のブロックの生成
+			create_block();
+			Hold_Flg = TRUE;
 		}
-		//新しいブロックの生成と次のブロックの生成
-		create_block();
-	}
+
+		//出現位置の設定
+		DropBlock_X = DROP_BLOCK_INIT_X;
+		DropBlock_Y = DROP_BLOCK_INIT_Y;
 }
 
 /****************************************************
@@ -538,6 +552,9 @@ void lock_block(int x, int y)
 		}
 	}
 	PlaySoundMem(SoundEffect[1], DX_PLAYTYPE_BACK, TRUE);
+
+	//ホールドを可能にする
+	Hold_Flg = FALSE;
 }
 
 /****************************************************
@@ -549,12 +566,12 @@ void check_line(void)
 {
 	int i, j, k;     //ループカウンタ
 
-	for (i = 0; i < FIELD_HEIGHT; i++)
+	for (i = 0; i < FIELD_HEIGHT-1; i++)
 	{
-		for (j = 0; j < FIELD_WIDTH; j++)
+		for (j = 1; j < FIELD_WIDTH; j++)
 		{
 			//行の途中が開いているか？
-			if (Field[i][j] != E_BLOCK_EMPTY)
+			if (Field[i][j] == E_BLOCK_EMPTY)
 			{
 				break;
 			}
