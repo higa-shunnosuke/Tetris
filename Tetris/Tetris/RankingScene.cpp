@@ -29,12 +29,13 @@ typedef struct
 /****************************************************
 *グローバル変数宣言
 *****************************************************/
-T_RANKING Ranking_Data[RANKING_MAX];     //ランキングデータ
-T_RANKING New_Score;     //新しいスコアデータ
-int DispMode;     //表示モード
+T_RANKING Ranking_Data[RANKING_MAX];	//ランキングデータ
+T_RANKING New_Score;					//新しいスコアデータ
+int DispMode;							//表示モード
 
-T_CURSOR Cursor;     //カーソル用変数
+T_CURSOR Cursor;		//カーソル用変数
 int name_num;
+int Name_Flg;			//ネームフラグ
 
 /****************************************************
 *プロトタイプ宣言
@@ -241,6 +242,16 @@ void ranking_input_name(void)
 {
 	int c;
 
+	//名前初期化処理
+	for (int i = 0; i < RANKING_NAME_LEM; i++)
+	{
+		if (Name_Flg==FALSE)
+		{
+			Name_Flg = TRUE;
+			New_Score.name[i] = '\0';
+		}
+	}
+
 	//カーソル操作処理
 	if (GetButtonDown(XINPUT_BUTTON_DPAD_LEFT)==TRUE)
 	{
@@ -317,6 +328,7 @@ void ranking_input_name(void)
 			{
 				DispMode = RANKING_DISP_MODE;
 				ranking_sort();
+				Name_Flg = FALSE;
 			}
 		}
 	}
