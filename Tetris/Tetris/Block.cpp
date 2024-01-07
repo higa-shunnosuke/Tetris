@@ -360,7 +360,7 @@ void create_block(void)
 void move_block(void)
 {
 	//左入力時
-	if (GetButtonDown(XINPUT_BUTTON_DPAD_LEFT)|| CheckHitKey(KEY_INPUT_LEFT) == TRUE)
+	if (GetButtonDown(XINPUT_BUTTON_DPAD_LEFT))
 	{
 		if (check_overlap(DropBlock_X-1,DropBlock_Y)==TRUE)
 		{
@@ -369,7 +369,7 @@ void move_block(void)
 	}
 
 	//右入力時
-	if (GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT) || CheckHitKey(KEY_INPUT_RIGHT) == TRUE)
+	if (GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT))
 	{
 		if (check_overlap(DropBlock_X + 1, DropBlock_Y) == TRUE)
 		{
@@ -387,9 +387,9 @@ void move_block(void)
 	}
 	
 	//下入力時（ソフトドロップ処理）
-	if (GetButtonDown(XINPUT_BUTTON_DPAD_DOWN) || CheckHitKey(KEY_INPUT_DOWN) == TRUE)
+	if (GetButtonDown(XINPUT_BUTTON_DPAD_DOWN))
 	{
-		while (check_overlap(DropBlock_X, DropBlock_Y+1) == TRUE)
+		if(check_overlap(DropBlock_X, DropBlock_Y+1) == TRUE)
 		{
 			DropBlock_Y++;
 		}

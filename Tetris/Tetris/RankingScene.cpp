@@ -250,6 +250,7 @@ void ranking_input_name(void)
 			Name_Flg = TRUE;
 			New_Score.name[i] = '\0';
 		}
+		
 	}
 
 	//ƒJ[ƒ\ƒ‹‘€ìˆ—
@@ -322,7 +323,7 @@ void ranking_input_name(void)
 			else if (Cursor.x == 10)
 			{
 				name_num--;
-				New_Score.name[name_num] = '/0';
+				New_Score.name[name_num] = '\0';
 			}
 			else
 			{
